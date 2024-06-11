@@ -1,7 +1,8 @@
 const cityForm = $('#form')
+const searchedLocation = $('textarea[name=cityName]')
 const hourlyDataEl = $('#currentConditions')
-const forecastDataEl = $('forecastConditions')
-today = dayjs().format('DD/MM/YYYY')
+const forecastDataEl = $('#forecastConditions')
+today = dayjs().format('MM/DD/YYYY')
 
 function getApi() {
     fetch('https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=44.64024&lon=-93.14355&appid=26f230ac3013feda83ce2e5b685b9913')
@@ -36,28 +37,13 @@ function getApi() {
     hourlyDataEl.append(currentWeather)
 
         handleWeatherCard(data.list[7])
-        handleWeatherCard(data.list[13])
-        handleWeatherCard(data.list[19])
-        handleWeatherCard(data.list[25])
+        handleWeatherCard(data.list[15])
+        handleWeatherCard(data.list[23])
         handleWeatherCard(data.list[31])
+        handleWeatherCard(data.list[39])
     })
 }
 getApi()
-
-function getCoordinates() {
-    fetch('http://api.openweathermap.org/geo/1.0/direct?q=farmington&appid=26f230ac3013feda83ce2e5b685b9913')
-        .then(function (response) {
-        return response.json();
-    })
-      .then(function (data) {
-        for (const location of data) {
-        console.log(location.lat)
-        console.log(location.lon)
-        console.log(location)
-        }
-      })
-}
-getCoordinates()
 
 function handleWeatherCard(array) {
     const Weather = document.createElement('div')
@@ -68,7 +54,8 @@ function handleWeatherCard(array) {
     const Humidity = document.createElement('li')
     const Wind = document.createElement('li')
 
-    City.textContent = `${dayjs(array.dt_txt).format('DD/MM/YY')}`
+    Weather.classList.add('col-2')
+    City.textContent = `${dayjs(array.dt_txt).format('MM/DD/YYYY')}`
     Icon.src = 'placeholder.jpeg'
     Temp.textContent = `Temp: ${array.main.temp}°F`
     Humidity.textContent = `Humidity: ${array.main.humidity}%`
@@ -82,3 +69,23 @@ function handleWeatherCard(array) {
     Weather.append(List)
     forecastDataEl.append(Weather)
 }
+
+function getCoordinates() {
+    fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${searchedLocation}&appid=26f230ac3013feda83ce2e5b685b9913`)
+        .then(function (response) {
+        return response.json();
+    })
+      .then(function (data) {
+        console.log(location.lat)
+        console.log(location.lon)
+        console.log(searchedLocation)
+        })
+}
+
+function storeLocation(event) {
+    localStorage.setItem('searches', json.stringify(searchedLocation))
+    console.log(searchedLocation)
+    event.preventDefault()
+}
+
+cityForm.on('submit', storeLocation)

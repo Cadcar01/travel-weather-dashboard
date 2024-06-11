@@ -22,16 +22,16 @@
     </header>
 
     <main class="row">
-    <form id="form" class="col-2 p-1">
-        <h2>Search for a city:</h2>
-        <input name="cityName" type="text" class="m-1" placeholder="Enter City">
-        <button type="submit" class="btn btn-success m-1" form='form' value='submit'>Submit</button>
-    </form>
-    
-    <section id="currentConditions" class="col-10">
-    </section>
-    <section id="forecastConditions" class="col-10">
-    </section>
+        <form id="form" class="col-2 p-1">
+          <label for="city-search">Search for a city:</label>
+        <textarea id="cityInput" name="cityName" class="m-1" placeholder="Enter City"></textarea>
+      <button id="submitBtn" type="submit" class="btn btn-success m-1">Submit</button>
+      </form>
+  
+  <section id="currentConditions" class="col-10">
+      </section>
+      <section id="forecastConditions" class="row">
+      </section>
     </main>
         
     <script src="script.js"></script>
